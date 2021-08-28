@@ -1,6 +1,12 @@
+import Navbar from "./components/Navbar";
+import TodoList from "./TodoList";
+
 function App() {
   return (
-    <div className="bg-purple-900 w-full h-full">hello</div>
+    <div className="bg-black w-full h-screen text-white p-2">
+      <Navbar />
+      <TodoList />
+    </div>
   );
 }
 
