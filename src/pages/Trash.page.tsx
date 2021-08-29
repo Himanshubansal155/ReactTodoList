@@ -5,6 +5,7 @@ interface Props {}
 const Trash: FC<Props> = () => {
   return (
     <div>
+        Trash page
     </div>
   );
 };

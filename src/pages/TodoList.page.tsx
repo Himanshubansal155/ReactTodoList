@@ -2,6 +2,10 @@ import { FC, memo } from "react";
 import { Switch, Route } from "react-router-dom";
 import DashboardComponent from "../components/Dashboard.component";
 import Sidebar from "../components/Sidebar";
+import DonePage from "./Done.page";
+import ImportantPage from "./Important.page";
+import InboxPage from "./Inbox.page";
+import TrashPage from "./Trash.page";
 
 interface Props {}
 
@@ -11,15 +15,17 @@ const TodoList: FC<Props> = () => {
       <Sidebar />
       <DashboardComponent>
         <Switch>
-          <Route path="/inbox">Inbox Page</Route>
+          <Route path="/inbox">
+            <InboxPage />
+          </Route>
           <Route path="/done">
-            <h1> Done page</h1>
+            <DonePage />
           </Route>
           <Route path="/important">
-            <h1> Important page</h1>
+            <ImportantPage />
           </Route>
           <Route path="/trash">
-            <h1> Trash page</h1>
+            <TrashPage />
           </Route>
         </Switch>
       </DashboardComponent>
