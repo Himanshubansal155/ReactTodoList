@@ -2,13 +2,13 @@ import {FC, memo} from "react";
 
 interface Props {}
 
-const TodoList: FC<Props> = () => {
+const Trash: FC<Props> = () => {
   return (
     <div>
     </div>
   );
 };
 
-TodoList.defaultProps = {};
+Trash.defaultProps = {};
 
-export default memo(TodoList);
+export default memo(Trash);

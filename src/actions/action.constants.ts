@@ -1,0 +1,1 @@
+export const SIDEBAR_TOGGLE = "sidebar_toggle";
