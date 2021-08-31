@@ -1,5 +1,5 @@
 import { Transition, Dialog } from "@headlessui/react";
-import { FC, Fragment, memo } from "react";
+import { FC, Fragment, memo, useState } from "react";
 import { FiEdit3, FiFileText, FiX } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { months } from "../actions/action.constants";
@@ -8,25 +8,36 @@ import { todoChangeAction } from "../actions/todoList.actions";
 interface Props {
   isOpen: boolean;
   onClose: (open: false) => void;
+  title?: string;
+  description?: string;
 }
 
-const NewTask: FC<Props> = ({ isOpen, onClose }) => {
-  const date = new Date();
+const NewTask: FC<Props> = ({ isOpen, onClose, title, description }) => {
+  const [titleState, setTitleState] = useState(title);
+  const [descriptionState, setDescriptionState] = useState(description);
   const dispatch = useDispatch();
   const handleClick = () => {
-    const title = (document.getElementById("title") as HTMLInputElement).value;
-    const desc = (document.getElementById("description") as HTMLInputElement)
-      .value;
-    dispatch(
-      todoChangeAction([
-        title,
-        `${months[date.getMonth()]}, ${date.getDate()} ${date.getFullYear()}`,
-        desc,
-        false,
-        false,
-        false,
-      ])
-    );
+    if (titleState === title && descriptionState === description) {
+      console.log("both same");
+    } else {
+      const date = new Date();
+      if (titleState === undefined) {
+        setTitleState("");
+      }
+      if (descriptionState === undefined) {
+        setDescriptionState("");
+      }
+      dispatch(
+        todoChangeAction([
+          titleState!,
+          `${months[date.getMonth()]}, ${date.getDate()} ${date.getFullYear()}`,
+          descriptionState!,
+          false,
+          false,
+          false,
+        ])
+      );
+    }
     onClose(false);
   };
   return (
@@ -77,6 +88,8 @@ const NewTask: FC<Props> = ({ isOpen, onClose }) => {
                     name="title"
                     id="title"
                     autoComplete="off"
+                    value={titleState}
+                    onChange={(e) => setTitleState(e.target.value)}
                     className="w-80 bg-transparent tracking-wider border-2 border-gray-700 rounded-md focus:outline-none p-3 placeholder-gray-300 text-sm text-green-600"
                   />
                 </div>
@@ -88,6 +101,8 @@ const NewTask: FC<Props> = ({ isOpen, onClose }) => {
                     id="description"
                     autoComplete="off"
                     rows={8}
+                    value={descriptionState}
+                    onChange={(e) => setDescriptionState(e.target.value)}
                     className="resize-none italic w-80 bg-transparent tracking-wider border-2 border-gray-700 rounded-md focus:outline-none p-3 placeholder-gray-300 text-gray-300 text-xs "
                   />
                 </div>
