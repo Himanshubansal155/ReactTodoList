@@ -20,7 +20,7 @@ const SidebarComponent: FC<Props> = ({
   onClick
 }) => {
   let classnames = classNames(
-    "p-2 px-3 flex justify-between text-gray-400 rounded-r-full cursor-pointer",
+    "p-2 px-3 flex justify-between text-gray-400 rounded-r-full cursor-pointer transition duration-300 ease-in-out",
     { "text-gray-800 bg-green-600": active, "hover:opacity-80": !active }
   );
   return (
@@ -29,7 +29,7 @@ const SidebarComponent: FC<Props> = ({
         <Icon className="inline text-xl mr-2" />
         <span className="capitalize">{title}</span>
       </div>
-      {batchNumber && (
+      {batchNumber!==undefined && (
         <span
           className={classNames("border px-2 rounded-full text-sm mx-2 font-bold", {
             "border-opacity-0": active,

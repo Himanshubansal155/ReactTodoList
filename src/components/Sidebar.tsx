@@ -1,5 +1,5 @@
 import { Transition } from "@headlessui/react";
-import { FC, Fragment, memo } from "react";
+import { FC, Fragment, memo, useState } from "react";
 import {
   FiClipboard,
   FiList,
@@ -7,16 +7,24 @@ import {
   FiThumbsUp,
   FiTrash2,
 } from "react-icons/fi";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import NewTaskPage from "../pages/NewTask.page";
 import { sidebarSelector } from "../selectors/sidebar.selectors";
+import { todoDataDoneLengthSelector, todoDataImportantLengthSelector, todoDataLengthSelector } from "../selectors/todoList.selectors";
 import { useAppSelector } from "../store";
 import SidebarComponent from "./SidebarComponent";
 
 interface Props {}
 
 const Sidebar: FC<Props> = () => {
+  let [isOpen, setIsOpen] = useState(false);
   const history = useHistory();
   const toggle = useAppSelector(sidebarSelector);
+  const location = useLocation().pathname;
+  const length = useAppSelector(todoDataLengthSelector);
+  const doneLength = useAppSelector(todoDataDoneLengthSelector);
+  const importantLength = useAppSelector(todoDataImportantLengthSelector);
+
   return (
     <Transition
       show={toggle.isSidebarOpen}
@@ -37,30 +45,30 @@ const Sidebar: FC<Props> = () => {
         </div>
         <div className="pr-4 flex flex-col space-y-2">
           <SidebarComponent
-            active={true}
+            active={location === "/inbox" ? true : false}
             Icon={FiList}
             title="inbox"
-            batchNumber={2}
+            batchNumber={length? length: 0}
             onClick={() => history.push("/inbox")}
           />
           <SidebarComponent
-            active={false}
+            active={location === "/done" ? true : false}
             Icon={FiThumbsUp}
             title="done"
-            batchNumber={2}
+            batchNumber={doneLength? doneLength: 0}
             type="secondary"
             onClick={() => history.push("/done")}
           />
           <SidebarComponent
-            active={false}
+            active={location === "/important" ? true : false}
             Icon={FiStar}
             title="important"
-            batchNumber={2}
+            batchNumber={importantLength? importantLength: 0}
             type="tertiary"
             onClick={() => history.push("/important")}
           />
           <SidebarComponent
-            active={false}
+            active={location === "/trash" ? true : false}
             Icon={FiTrash2}
             title="trash"
             onClick={() => history.push("/trash")}
@@ -68,10 +76,11 @@ const Sidebar: FC<Props> = () => {
         </div>
         <button
           className="absolute bottom-8 p-2 px-4 bg-green-600 text-gray-800 left-16 rounded-md tracking-wider transform ease-linear duration-500 hover:-translate-y-2"
-          onClick={() => console.log("clicked")}
+          onClick={() => setIsOpen(true)}
         >
           + New Task
         </button>
+        <NewTaskPage isOpen={isOpen} onClose={setIsOpen}/>
       </div>
     </Transition>
   );

@@ -1,0 +1,1 @@
+export type todoListtype = [string, string, string, boolean, boolean, boolean];

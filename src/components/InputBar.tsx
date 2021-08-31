@@ -4,7 +4,7 @@ interface Props {}
 
 const InputBar: FC<Props> = () => {
   return (
-    <div className="">
+    <div>
       <input
         placeholder="Search Here..."
         className="w-full shadow-2xl bg-transparent tracking-wider focus:outline-none p-3 placeholder-gray-300 text-sm border-b border-gray-800 text-green-600"
