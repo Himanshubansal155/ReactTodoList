@@ -7,7 +7,7 @@ import {
   TODOLIST_TRASH,
   TODOLIST_UPDATE,
 } from "../actions/action.constants";
-import { dataChangeArr } from "../model/Entity";
+import { dataChangeArr, dataValueChange } from "../model/Entity";
 import { todoListtype } from "../TodoListModel";
 
 export interface TodoListState {
@@ -40,7 +40,7 @@ export const todoListReducer: Reducer<TodoListState> = (
 
       return {
         ...state,
-        data: action.payload,
+        data: dataArr,
         isInbox: inboxArr,
         isDone: doneArr,
         isImportant: importantArr,
@@ -52,33 +52,10 @@ export const todoListReducer: Reducer<TodoListState> = (
       localStorage.setItem(LS_INBOX, JSON.stringify(newState.data));
       return { ...newState, isInbox: dataChangeArr(newState.data) };
     case TODOLIST_DONE:
-      const id = action.payload as number;
-      const dataAtt = JSON.parse(
-        JSON.stringify(
-          state.data.map((e, index) => {
-            if (index === id) {
-              e[3] = !e[3];
-            }
-            return e;
-          })
-        )
-      );
-      localStorage.setItem(LS_INBOX, JSON.stringify(dataAtt));
-
+      const dataAtt = dataValueChange(action.payload, 3, state.data);
       return { ...state, data: dataAtt, isDone: dataChangeArr(dataAtt, 3) };
     case TODOLIST_IMPORTANT: {
-      const id = action.payload;
-      const dataAtt = JSON.parse(
-        JSON.stringify(
-          state.data.map((e, index) => {
-            if (index === id) {
-              e[4] = !e[4];
-            }
-            return e;
-          })
-        )
-      );
-      localStorage.setItem(LS_INBOX, JSON.stringify(dataAtt));
+      const dataAtt = dataValueChange(action.payload, 4, state.data);
       return {
         ...state,
         data: dataAtt,
