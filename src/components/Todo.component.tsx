@@ -75,25 +75,24 @@ const Todo: FC<Props> = ({ data, id }) => {
             </Popover.Button>
             <Popover.Panel className="absolute z-10 w-40 right-0 rounded-md bg-gray-800">
               <div className="flex flex-col p-2 text-sm space-y-2">
-                <span
-                  className="cursor-pointer"
-                  onClick={() => setIsOpenEdit(true)}
-                >
-                  <Popover.Button>Edit</Popover.Button>
-                </span>
-                <span
-                  className="cursor-pointer"
-                  onClick={() => {
-                    dispatch(todoImportantAction(id));
-                  }}
-                >
-                  <Popover.Button>
+                <Popover.Button className="cursor-pointer text-left">
+                  <span onClick={() => setIsOpenEdit(true)}>Edit</span>
+                </Popover.Button>
+                <Popover.Button className="cursor-pointer text-left">
+                  <span
+                    onClick={() => {
+                      dispatch(todoImportantAction(id));
+                    }}
+                  >
                     {data[4] !== true ? "Important" : "Back To List"}
-                  </Popover.Button>
-                </span>
-                <span className="cursor-pointer" onClick={() => {}}>
-                  <Popover.Button>Delete</Popover.Button>
-                </span>
+                  </span>
+                </Popover.Button>
+                <Popover.Button
+                  className="cursor-pointer text-left"
+                  onClick={() => {}}
+                >
+                  Delete
+                </Popover.Button>
               </div>
             </Popover.Panel>
           </Popover>

@@ -18,11 +18,12 @@ const Important: FC<Props> = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div className="overflow-y-scroll absolute bottom-0 top-10 right-0 left-0 scrollbar mt-1.5">
       {done &&
         done.map((element) => (
           <TodoComponent data={data1[element]} id={element} key={element} />
         ))}
+        <div className="h-10"></div>
     </div>
   );
 };

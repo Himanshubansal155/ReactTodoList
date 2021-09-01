@@ -23,7 +23,7 @@ const Inbox: FC<Props> = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="overflow-y-scroll absolute bottom-0 top-10 right-0 left-0">
+    <div className="overflow-y-scroll absolute bottom-0 top-10 right-0 left-0 scrollbar mt-1.5">
       {inbox &&
         inbox.map((element, index) => (
           <TodoComponent data={data1[element]} id={index} key={index} />
