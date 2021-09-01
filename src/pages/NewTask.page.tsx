@@ -3,16 +3,18 @@ import { FC, Fragment, memo, useState } from "react";
 import { FiEdit3, FiFileText, FiX } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { months } from "../actions/action.constants";
-import { todoChangeAction } from "../actions/todoList.actions";
+import { todoChangeAction, todoEditAction } from "../actions/todoList.actions";
 
 interface Props {
   isOpen: boolean;
   onClose: (open: false) => void;
   title?: string;
   description?: string;
+  important?: boolean;
+  id?: number;
 }
 
-const NewTask: FC<Props> = ({ isOpen, onClose, title, description }) => {
+const NewTask: FC<Props> = ({ isOpen, onClose, title, description, id, important }) => {
   const [titleState, setTitleState] = useState(title);
   const [descriptionState, setDescriptionState] = useState(description);
   const dispatch = useDispatch();
@@ -27,18 +29,35 @@ const NewTask: FC<Props> = ({ isOpen, onClose, title, description }) => {
       if (descriptionState === undefined) {
         setDescriptionState("");
       }
-      dispatch(
-        todoChangeAction([
-          titleState!,
-          `${months[date.getMonth()]}, ${date.getDate()} ${date.getFullYear()}`,
-          descriptionState!,
-          false,
-          false,
-          false,
-        ])
-      );
+      if (id === undefined) {
+        dispatch(
+          todoChangeAction([
+            titleState!,
+            `${
+              months[date.getMonth()]
+            }, ${date.getDate()} ${date.getFullYear()}`,
+            descriptionState!,
+            false,
+            false,
+            false,
+          ])
+        );
+      } else {
+        dispatch(
+          todoEditAction([
+            titleState!,
+            `${
+              months[date.getMonth()]
+            }, ${date.getDate()} ${date.getFullYear()}`,
+            descriptionState!,
+            false,
+            important!,
+            false,
+          ], id)
+        );
+      }
+      onClose(false);
     }
-    onClose(false);
   };
   return (
     <div>

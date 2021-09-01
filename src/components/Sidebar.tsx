@@ -10,7 +10,11 @@ import {
 import { useHistory, useLocation } from "react-router-dom";
 import NewTaskPage from "../pages/NewTask.page";
 import { sidebarSelector } from "../selectors/sidebar.selectors";
-import { todoDataDoneLengthSelector, todoDataImportantLengthSelector, todoDataLengthSelector } from "../selectors/todoList.selectors";
+import {
+  todoDataDoneLengthSelector,
+  todoDataImportantLengthSelector,
+  todoDataLengthSelector,
+} from "../selectors/todoList.selectors";
 import { useAppSelector } from "../store";
 import SidebarComponent from "./SidebarComponent";
 
@@ -48,14 +52,14 @@ const Sidebar: FC<Props> = () => {
             active={location === "/inbox" ? true : false}
             Icon={FiList}
             title="inbox"
-            batchNumber={length? length: 0}
+            batchNumber={length ? length : 0}
             onClick={() => history.push("/inbox")}
           />
           <SidebarComponent
             active={location === "/done" ? true : false}
             Icon={FiThumbsUp}
             title="done"
-            batchNumber={doneLength? doneLength: 0}
+            batchNumber={doneLength ? doneLength : 0}
             type="secondary"
             onClick={() => history.push("/done")}
           />
@@ -63,7 +67,7 @@ const Sidebar: FC<Props> = () => {
             active={location === "/important" ? true : false}
             Icon={FiStar}
             title="important"
-            batchNumber={importantLength? importantLength: 0}
+            batchNumber={importantLength ? importantLength : 0}
             type="tertiary"
             onClick={() => history.push("/important")}
           />
@@ -80,7 +84,13 @@ const Sidebar: FC<Props> = () => {
         >
           + New Task
         </button>
-        <NewTaskPage isOpen={isOpen} onClose={setIsOpen}/>
+        <NewTaskPage
+          isOpen={isOpen}
+          onClose={setIsOpen}
+          title=""
+          description=""
+          important={false}
+        />
       </div>
     </Transition>
   );

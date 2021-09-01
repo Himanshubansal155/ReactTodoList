@@ -3,6 +3,7 @@ export const TODOLIST_DONE = "todoList_done";
 export const TODOLIST_IMPORTANT = "todoList_important";
 export const TODOLIST_TRASH = "todoList_trash";
 export const TODOLIST_UPDATE = "todolist_update";
+export const TODOLIST_EDIT = "todolist_edit";
 export const TODOLIST_FETCH = "todolist_fetch";
 
 export const LS_INBOX = "TodoListInbox";

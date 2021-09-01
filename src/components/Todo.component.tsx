@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import {
   todoDoneAction,
   todoImportantAction,
+  todoTrashAction,
 } from "../actions/todoList.actions";
 import { todoListtype } from "../TodoListModel";
 import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
@@ -76,22 +77,25 @@ const Todo: FC<Props> = ({ data, id }) => {
             <Popover.Panel className="absolute z-10 w-40 right-0 rounded-md bg-gray-800">
               <div className="flex flex-col p-2 text-sm space-y-2">
                 <Popover.Button className="cursor-pointer text-left">
-                  <span onClick={() => setIsOpenEdit(true)}>Edit</span>
+                  <p onClick={() => setIsOpenEdit(true)}>Edit</p>
                 </Popover.Button>
                 <Popover.Button className="cursor-pointer text-left">
-                  <span
+                  <p
                     onClick={() => {
                       dispatch(todoImportantAction(id));
                     }}
                   >
                     {data[4] !== true ? "Important" : "Back To List"}
-                  </span>
+                  </p>
                 </Popover.Button>
-                <Popover.Button
-                  className="cursor-pointer text-left"
-                  onClick={() => {}}
-                >
-                  Delete
+                <Popover.Button className="cursor-pointer text-left">
+                  <p
+                    onClick={() => {
+                      dispatch(todoTrashAction(id));
+                    }}
+                  >
+                    Delete
+                  </p>
                 </Popover.Button>
               </div>
             </Popover.Panel>
@@ -142,6 +146,8 @@ const Todo: FC<Props> = ({ data, id }) => {
         onClose={setIsOpenEdit}
         title={data[0]}
         description={data[2]}
+        important={data[4]}
+        id={id}
       />
     </>
   );

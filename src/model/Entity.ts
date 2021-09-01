@@ -9,7 +9,9 @@ export const dataChangeArr = (dataArr: todoListtype[], indexValue?: number) => {
         arr.push(index);
       }
     } else {
-      arr.push(index);
+      if (e[5] === false) {
+        arr.push(index);
+      }
     }
     return index;
   });

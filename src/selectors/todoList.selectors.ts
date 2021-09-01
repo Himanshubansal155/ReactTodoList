@@ -25,7 +25,7 @@ export const todoListTrashSelector = createSelector(
 );
 
 export const todoDataLengthSelector = createSelector(
-  [todoListDataSelector],
+  [todoListInboxSelector],
   (state) => state?.length
 );
 export const todoDataDoneLengthSelector = createSelector(

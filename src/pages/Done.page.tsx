@@ -26,7 +26,7 @@ const Done: FC<Props> = () => {
         done.map((element) => (
           <TodoComponent data={data1[element]} id={element} key={element} />
         ))}
-        <div className="h-10"></div>
+      <div className="h-10"></div>
     </div>
   );
 };
