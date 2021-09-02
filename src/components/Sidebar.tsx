@@ -89,7 +89,7 @@ const Sidebar: FC<Props> = () => {
           onClose={setIsOpen}
           title=""
           description=""
-          important={false}
+          done={false}
         />
       </div>
     </Transition>

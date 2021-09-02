@@ -2,8 +2,10 @@ import classNames from "classnames";
 import { FC, memo, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
+  todoDeleteAction,
   todoDoneAction,
   todoImportantAction,
+  todoRollBackAction,
   todoTrashAction,
 } from "../actions/todoList.actions";
 import { todoListtype } from "../TodoListModel";
@@ -69,13 +71,50 @@ const Todo: FC<Props> = ({ data, id }) => {
             </h2>
           </div>
         </div>
-        <div className="text-xl text-gray-400 flex flex-row-reverse">
+        <div
+          className={classNames("text-xl text-gray-400 flex flex-row-reverse", {
+            // hidden: data[5],
+          })}
+        >
           <Popover className="relative">
             <Popover.Button>
               <FiMoreVertical />
             </Popover.Button>
-            <Popover.Panel className="absolute z-10 w-40 right-0 rounded-md bg-gray-800">
-              <div className="flex flex-col p-2 text-sm space-y-2">
+            <Popover.Panel
+              className={classNames(
+                "absolute z-10 w-40 right-0 rounded-md bg-gray-800"
+                // { hidden: data[5] }
+              )}
+            >
+              <div
+                className={classNames("flex flex-col p-2 text-sm space-y-2", {
+                  hidden: !data[5],
+                })}
+              >
+                <Popover.Button className="cursor-pointer text-left">
+                  <p
+                    onClick={() => {
+                      dispatch(todoRollBackAction(id));
+                    }}
+                  >
+                    RollBack
+                  </p>
+                </Popover.Button>
+                <Popover.Button className="cursor-pointer text-left">
+                  <p
+                    onClick={() => {
+                      dispatch(todoDeleteAction(id));
+                    }}
+                  >
+                    Delete
+                  </p>
+                </Popover.Button>
+              </div>
+              <div
+                className={classNames("flex flex-col p-2 text-sm space-y-2", {
+                  hidden: data[5],
+                })}
+              >
                 <Popover.Button className="cursor-pointer text-left">
                   <p onClick={() => setIsOpenEdit(true)}>Edit</p>
                 </Popover.Button>
@@ -100,7 +139,7 @@ const Todo: FC<Props> = ({ data, id }) => {
               </div>
             </Popover.Panel>
           </Popover>
-          <Popover className="relative mr-2">
+          <Popover className={classNames("relative mr-2", { hidden: data[5] })}>
             <Popover.Button>
               <FiAlertOctagon
                 className={classNames({

@@ -5,6 +5,8 @@ export const TODOLIST_TRASH = "todoList_trash";
 export const TODOLIST_UPDATE = "todolist_update";
 export const TODOLIST_EDIT = "todolist_edit";
 export const TODOLIST_FETCH = "todolist_fetch";
+export const TODOLIST_DELETE = "todolist_delete";
+export const TODOLIST_ROLLBACK = "todolist_rollback";
 
 export const LS_INBOX = "TodoListInbox";
 

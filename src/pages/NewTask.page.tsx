@@ -10,11 +10,12 @@ interface Props {
   onClose: (open: false) => void;
   title?: string;
   description?: string;
-  important?: boolean;
+  done?: boolean;
   id?: number;
+  important?: boolean;
 }
 
-const NewTask: FC<Props> = ({ isOpen, onClose, title, description, id, important }) => {
+const NewTask: FC<Props> = ({ isOpen, onClose, title, description, id, done, important }) => {
   const [titleState, setTitleState] = useState(title);
   const [descriptionState, setDescriptionState] = useState(description);
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const NewTask: FC<Props> = ({ isOpen, onClose, title, description, id, important
               months[date.getMonth()]
             }, ${date.getDate()} ${date.getFullYear()}`,
             descriptionState!,
-            false,
+            done!,
             important!,
             false,
           ], id)

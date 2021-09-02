@@ -1,10 +1,12 @@
 import { Reducer } from "redux";
 import {
   LS_INBOX,
+  TODOLIST_DELETE,
   TODOLIST_DONE,
   TODOLIST_EDIT,
   TODOLIST_FETCH,
   TODOLIST_IMPORTANT,
+  TODOLIST_ROLLBACK,
   TODOLIST_TRASH,
   TODOLIST_UPDATE,
 } from "../actions/action.constants";
@@ -77,9 +79,32 @@ export const todoListReducer: Reducer<TodoListState> = (
         data: dataValueChange(id, 5, state.data),
         isTrash: [...state.isTrash, id],
       };
+      newStateArr.data = dataValueChange(id, 4, newStateArr.data);
       newStateArr.isInbox.splice(newStateArr.isInbox.indexOf(id), 1);
+      const index = newStateArr.isImportant.indexOf(id);
+      index !== -1 && newStateArr.isImportant.splice(index, 1);
       localStorage.setItem(LS_INBOX, JSON.stringify(newStateArr.data));
       return newStateArr;
+    case TODOLIST_DELETE: {
+      const id = action.payload as number;
+      const newState = JSON.parse(JSON.stringify(state));
+      newState.data.splice(id, 1);
+      newState.isTrash.splice(newState.isTrash.indexOf(id), 1);
+      console.log("delete", id, newState);
+      localStorage.setItem(LS_INBOX, JSON.stringify(newState.data));
+      return newState;
+    }
+    case TODOLIST_ROLLBACK: {
+      const id = action.payload as number;
+      const newStateArr = {
+        ...state,
+        data: dataValueChange(id, 5, state.data),
+        isInbox: [...state.isInbox, id],
+      };
+      newStateArr.isTrash.splice(newStateArr.isTrash.indexOf(id), 1);
+      localStorage.setItem(LS_INBOX, JSON.stringify(newStateArr.data));
+      return newStateArr;
+    }
     default:
       return state;
   }
