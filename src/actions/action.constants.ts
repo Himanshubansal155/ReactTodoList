@@ -7,6 +7,7 @@ export const TODOLIST_EDIT = "todolist_edit";
 export const TODOLIST_FETCH = "todolist_fetch";
 export const TODOLIST_DELETE = "todolist_delete";
 export const TODOLIST_ROLLBACK = "todolist_rollback";
+export const TODOLIST_QUERY = "todolist_query";
 
 export const LS_INBOX = "TodoListInbox";
 

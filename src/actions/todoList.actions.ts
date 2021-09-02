@@ -5,6 +5,7 @@ import {
   TODOLIST_EDIT,
   TODOLIST_FETCH,
   TODOLIST_IMPORTANT,
+  TODOLIST_QUERY,
   TODOLIST_ROLLBACK,
   TODOLIST_TRASH,
   TODOLIST_UPDATE,
@@ -15,9 +16,9 @@ export const todoChangeAction = (data: todoListtype) => ({
   payload: data,
 });
 
-export const todoEditAction = (data: todoListtype, id:number) => ({
+export const todoEditAction = (data: todoListtype, id: number) => ({
   type: TODOLIST_EDIT,
-  payload: {data, id},
+  payload: { data, id },
 });
 
 export const todoFetchAction = (data: todoListtype[]) => ({
@@ -25,27 +26,32 @@ export const todoFetchAction = (data: todoListtype[]) => ({
   payload: data,
 });
 
-export const todoDoneAction = (id:number) => ({
+export const todoDoneAction = (id: number) => ({
   type: TODOLIST_DONE,
-  payload: id
+  payload: id,
 });
 
 export const todoImportantAction = (id: number) => ({
   type: TODOLIST_IMPORTANT,
-  payload: id
+  payload: id,
 });
 
-export const todoTrashAction = (id:number) => ({
+export const todoTrashAction = (id: number) => ({
   type: TODOLIST_TRASH,
-  payload: id
+  payload: id,
 });
 
-export const todoDeleteAction = (id:number) => ({
+export const todoDeleteAction = (id: number) => ({
   type: TODOLIST_DELETE,
-  payload: id
+  payload: id,
 });
 
-export const todoRollBackAction = (id:number) => ({
+export const todoRollBackAction = (id: number) => ({
   type: TODOLIST_ROLLBACK,
-  payload: id
+  payload: id,
+});
+
+export const todoQueryChangeAction = (query: string) => ({
+  type: TODOLIST_QUERY,
+  payload: query,
 });

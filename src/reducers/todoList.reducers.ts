@@ -6,6 +6,7 @@ import {
   TODOLIST_EDIT,
   TODOLIST_FETCH,
   TODOLIST_IMPORTANT,
+  TODOLIST_QUERY,
   TODOLIST_ROLLBACK,
   TODOLIST_TRASH,
   TODOLIST_UPDATE,
@@ -19,6 +20,7 @@ export interface TodoListState {
   isDone: number[];
   isImportant: number[];
   isTrash: number[];
+  query?: string;
 }
 
 const initialState = {
@@ -79,10 +81,12 @@ export const todoListReducer: Reducer<TodoListState> = (
         data: dataValueChange(id, 5, state.data),
         isTrash: [...state.isTrash, id],
       };
-      newStateArr.data = dataValueChange(id, 4, newStateArr.data);
+      const index = state.isImportant.indexOf(id);
+      if (index !== -1) {
+        newStateArr.data = dataValueChange(id, 4, newStateArr.data);
+        newStateArr.isImportant.splice(index, 1);
+      }
       newStateArr.isInbox.splice(newStateArr.isInbox.indexOf(id), 1);
-      const index = newStateArr.isImportant.indexOf(id);
-      index !== -1 && newStateArr.isImportant.splice(index, 1);
       localStorage.setItem(LS_INBOX, JSON.stringify(newStateArr.data));
       return newStateArr;
     case TODOLIST_DELETE: {
@@ -90,7 +94,6 @@ export const todoListReducer: Reducer<TodoListState> = (
       const newState = JSON.parse(JSON.stringify(state));
       newState.data.splice(id, 1);
       newState.isTrash.splice(newState.isTrash.indexOf(id), 1);
-      console.log("delete", id, newState);
       localStorage.setItem(LS_INBOX, JSON.stringify(newState.data));
       return newState;
     }
@@ -105,6 +108,8 @@ export const todoListReducer: Reducer<TodoListState> = (
       localStorage.setItem(LS_INBOX, JSON.stringify(newStateArr.data));
       return newStateArr;
     }
+    case TODOLIST_QUERY:
+      return { ...state, query: action.payload };
     default:
       return state;
   }

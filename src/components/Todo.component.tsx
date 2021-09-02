@@ -14,6 +14,8 @@ import { FiAlertOctagon, FiMoreVertical } from "react-icons/fi";
 import { Popover } from "@headlessui/react";
 import ViewTaskPage from "../pages/ViewTask.page";
 import NewTaskPage from "../pages/NewTask.page";
+import { useAppSelector } from "../store";
+import { todoListQuerySelector } from "../selectors/todoList.selectors";
 
 interface Props {
   data: todoListtype;
@@ -27,6 +29,15 @@ const Todo: FC<Props> = ({ data, id }) => {
   const [colorImportance, setColorImportance] = useState<
     "High" | "Low" | "Medium"
   >("Low");
+  const query = useAppSelector(todoListQuerySelector);
+  let queryBoolean = false;
+  if (query && data[0].search(query) !== -1) {
+    document.getElementById("titleText" + id)?.scrollIntoView();
+    queryBoolean = true;
+  }
+  if (data === undefined) {
+    return <div className="text-red-900 text-center">No Data Found</div>;
+  }
 
   return (
     <>
@@ -58,7 +69,14 @@ const Todo: FC<Props> = ({ data, id }) => {
             )}
             onClick={() => setIsOpen(true)}
           >
-            <h1 className="text-lg w-60 md:w-120 lg:w-152">{data[0]}</h1>
+            <h1
+              className={classNames("text-lg w-60 md:w-120 lg:w-152", {
+                "text-blue-900": queryBoolean,
+              })}
+              id={"titleText" + id}
+            >
+              {data[0]}
+            </h1>
             <h2
               className={classNames("text-xs text-gray-400", {
                 "text-yellow-300": data[4],
@@ -71,11 +89,7 @@ const Todo: FC<Props> = ({ data, id }) => {
             </h2>
           </div>
         </div>
-        <div
-          className={classNames("text-xl text-gray-400 flex flex-row-reverse", {
-            // hidden: data[5],
-          })}
-        >
+        <div className="text-xl text-gray-400 flex flex-row-reverse">
           <Popover className="relative">
             <Popover.Button>
               <FiMoreVertical />

@@ -7,6 +7,11 @@ export const todoListDataSelector = createSelector(
   [todoListStateSelector],
   (state) => state.data
 );
+
+export const todoListQuerySelector = createSelector(
+  [todoListStateSelector],
+  (state) => state.query
+);
 export const todoListInboxSelector = createSelector(
   [todoListStateSelector],
   (state) => state.isInbox
